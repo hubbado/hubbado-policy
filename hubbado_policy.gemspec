@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "i18n"
   s.add_dependency "evt-casing"
+  s.add_dependency "evt-record_invocation"
   s.add_dependency "evt-template_method"
 
   # TODO: check if they are used
