@@ -1,0 +1,6 @@
+en:
+  blank: blank error
+  custom_error:
+    blank: custom blank error
+  errors:
+    denied: error denied message

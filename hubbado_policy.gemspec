@@ -1,12 +1,12 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
-  s.name = "hubbado-policy"
+  s.name = "hubbado_policy"
   s.version = "0.0.0"
   s.summary = " "
   s.description = " "
 
   s.authors = ["devs@hubbado.com"]
-  s.homepage = 'https://github.com/hubbado/hubbado-policy'
+  s.homepage = 'https://github.com/hubbado/hubbado_policy'
 
   s.metadata["allowed_push_host"] = "https://rubygems.pkg.github.com/hubbado"
   s.metadata["github_repo"] = s.homepage
@@ -17,6 +17,11 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.required_ruby_version = ">= 3.3"
 
+  s.add_dependency "i18n"
+  s.add_dependency "evt-casing"
+  s.add_dependency "evt-template_method"
+
+  # TODO: check if they are used
   s.add_dependency "evt-clock"
   s.add_dependency "evt-identifier-uuid"
 

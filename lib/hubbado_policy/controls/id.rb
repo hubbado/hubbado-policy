@@ -1,4 +1,4 @@
-module Hubbado-policy
+module HubbadoPolicy
   module Controls
     ID = Identifier::UUID::Controls::Incrementing
   end

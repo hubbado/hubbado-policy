@@ -1,4 +1,4 @@
-module Hubbado-policy
+module HubbadoPolicy
   module Controls
     module Time
       def self.example(time=nil)

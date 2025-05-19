@@ -1,3 +1,3 @@
 require_relative './test_init'
 
-TestBench::CLI.()
+TestBench::Run.('test/automated')
