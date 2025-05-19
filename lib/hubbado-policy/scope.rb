@@ -40,7 +40,7 @@ module HubbadoPolicy
         @result ||= []
       end
 
-      def called?(record, scope = nil, **options)
+      def scoped?(record, scope = nil, **options)
         invoked?(:call, record: record, scope: scope, options: options)
       end
     end
