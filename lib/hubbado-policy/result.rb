@@ -4,7 +4,7 @@ module HubbadoPolicy
     attr_accessor :reason
 
     def initialize(permitted, reason, i18n_scope = nil)
-      i18n_scope ||= ""
+      i18n_scope ||= "hubbado_policy"
 
       @permitted = permitted
       @reason = reason
@@ -24,7 +24,7 @@ module HubbadoPolicy
     end
 
     def message
-      return I18n.t('errors.denied') if generic_deny?
+      return I18n.t('hubbado_policy.errors.denied') if generic_deny?
       I18n.t(reason, scope: @i18n_scope)
     end
 
