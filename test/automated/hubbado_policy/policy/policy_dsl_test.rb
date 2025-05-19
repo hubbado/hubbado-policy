@@ -21,7 +21,7 @@ context "HubbadoPolicy" do
 
         result = HubbadoPolicy::Result.new(false, :my_reason)
 
-        assert !policy.test_action?
+        refute policy.test_action?
         assert policy.test_action == result
       end
 
@@ -38,7 +38,7 @@ context "HubbadoPolicy" do
 
         policy = policy_class.new(user, record)
 
-        assert !policy.test_action?
+        refute policy.test_action?
       end
 
       test 'can use return statements in the policy DSL' do
@@ -73,7 +73,7 @@ context "HubbadoPolicy" do
 
         test 'builds boolean methods accept the argument' do
           assert policy.test_action?(:pass)
-          assert !policy.test_action?(:fail)
+          refute policy.test_action?(:fail)
 
           assert_raises ArgumentError, "wrong number of arguments (given 0, expected 1)" do
             policy.test_action?
@@ -82,7 +82,7 @@ context "HubbadoPolicy" do
 
         test 'builds policy methods that accept the argument' do
           assert policy.test_action?(:pass)
-          assert !policy.test_action?(:fail)
+          refute policy.test_action?(:fail)
 
           assert_raises ArgumentError, "wrong number of arguments (given 0, expected 1)" do
             policy.test_action
@@ -105,7 +105,7 @@ context "HubbadoPolicy" do
 
         test 'builds boolean methods accept the argument' do
           assert policy.test_action?(kwarg: :pass)
-          assert !policy.test_action?(kwarg: :fail)
+          refute policy.test_action?(kwarg: :fail)
 
           assert_raises ArgumentError, "missing keyword: :kwarg" do
             policy.test_action?
@@ -114,7 +114,7 @@ context "HubbadoPolicy" do
 
         test 'builds policy methods that accept the argument' do
           assert policy.test_action(kwarg: :pass).permitted?
-          assert !policy.test_action(kwarg: :fail).permitted?
+          refute policy.test_action(kwarg: :fail).permitted?
 
           assert_raises ArgumentError, "missing keyword: :kwarg" do
             policy.test_action

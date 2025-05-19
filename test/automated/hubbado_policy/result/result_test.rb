@@ -26,7 +26,7 @@ context "HubbadoPolicy" do
       test "returns false when not permitted" do
         result = HubbadoPolicy::Result.new(false, :permitted)
 
-        assert !result.permitted?
+        refute result.permitted?
       end
     end
 
@@ -40,7 +40,7 @@ context "HubbadoPolicy" do
       test "returns false when not denied" do
         result = HubbadoPolicy::Result.new(true, :denied)
 
-        assert !result.denied?
+        refute result.denied?
       end
     end
 
