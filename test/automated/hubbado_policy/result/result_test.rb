@@ -54,6 +54,12 @@ context "HubbadoPolicy" do
     end
 
     context "#message" do
+      test "nothing when permitted" do
+        result = HubbadoPolicy::Result.new(true, :permitted)
+
+        assert result.message.nil?
+      end
+
       test "generic denied message" do
         result = HubbadoPolicy::Result.new(false, :denied)
 
