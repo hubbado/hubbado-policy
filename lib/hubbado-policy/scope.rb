@@ -24,8 +24,7 @@ module HubbadoPolicy
       resolve(record, scope, **options)
     end
 
-    # Implement this and return all the users that are permitted to view the
-    # given record
+    # Implement this in a subclass
     template_method :resolve do |_record, _scope, **_options|
       raise MethodMissing
     end
