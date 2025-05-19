@@ -1,12 +1,12 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
-  s.name = "hubbado_policy"
+  s.name = "hubbado-policy"
   s.version = "0.0.0"
   s.summary = " "
   s.description = " "
 
   s.authors = ["devs@hubbado.com"]
-  s.homepage = 'https://github.com/hubbado/hubbado_policy'
+  s.homepage = 'https://github.com/hubbado/hubbado-policy'
 
   s.metadata["allowed_push_host"] = "https://rubygems.pkg.github.com/hubbado"
   s.metadata["github_repo"] = s.homepage

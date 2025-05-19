@@ -9,6 +9,6 @@ require 'template_method'; TemplateMethod.activate
 I18n.load_path += Dir[File.expand_path("config/locales") + "/*.yml"]
 I18n.default_locale = :en
 
-require 'hubbado_policy/scope'
-require 'hubbado_policy/result'
-require 'hubbado_policy/policy'
+require 'hubbado-policy/scope'
+require 'hubbado-policy/result'
+require 'hubbado-policy/policy'

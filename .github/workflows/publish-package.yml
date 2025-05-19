@@ -6,7 +6,7 @@ jobs:
   publish:
     strategy:
       matrix:
-        package: ["hubbado_policy"]
+        package: ["hubbado-policy"]
 
     uses: hubbado/workflows/.github/workflows/component-package.yml@main
     with:
