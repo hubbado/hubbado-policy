@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.metadata["homepage_uri"] = s.homepage
 
   s.require_paths = ["lib"]
-  s.files = Dir.glob("{lib}/**/*")
+  s.files = Dir.glob("{config,lib}/**/*")
   s.platform = Gem::Platform::RUBY
   s.required_ruby_version = ">= 3.3"
 
