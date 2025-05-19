@@ -10,7 +10,7 @@ context "HubbadoPolicy" do
       end
 
       test "with custom info sets data" do
-        result = HubbadoPolicy::Result.new(true, :permitted, nil, "custom_data")
+        result = HubbadoPolicy::Result.new(true, :permitted, data: "custom_data")
 
         assert result.data == "custom_data"
       end
@@ -87,7 +87,7 @@ context "HubbadoPolicy" do
       end
 
       test "custom denied message with i18n scope" do
-        result = HubbadoPolicy::Result.new(false, :blank, "hubbado_policy.custom_error")
+        result = HubbadoPolicy::Result.new(false, :blank, i18n_scope: "hubbado_policy.custom_error")
 
         assert result.message == "custom blank error"
       end

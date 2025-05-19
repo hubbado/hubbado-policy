@@ -3,7 +3,7 @@ module HubbadoPolicy
     attr_reader :reason
     attr_reader :data
 
-    def initialize(permitted, reason, i18n_scope = nil, data = nil)
+    def initialize(permitted, reason, i18n_scope: nil, data: nil)
       data ||= {}
       i18n_scope ||= "hubbado_policy"
 
