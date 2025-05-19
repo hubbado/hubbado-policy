@@ -1,13 +1,16 @@
 module HubbadoPolicy
   class Result
     attr_reader :reason
+    attr_reader :data
 
-    def initialize(permitted, reason, i18n_scope = nil)
+    def initialize(permitted, reason, i18n_scope = nil, data = nil)
+      data ||= {}
       i18n_scope ||= "hubbado_policy"
 
       @permitted = permitted
       @reason = reason
       @i18n_scope = i18n_scope
+      @data = data
     end
 
     def permitted?

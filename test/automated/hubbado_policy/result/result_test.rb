@@ -2,6 +2,20 @@ require_relative "../../../test_init"
 
 context "HubbadoPolicy" do
   context "Result" do
+    context "#data" do
+      test "data is an empty hash" do
+        result = HubbadoPolicy::Result.new(true, :permitted)
+
+        assert result.data == {}
+      end
+
+      test "with custom info sets data" do
+        result = HubbadoPolicy::Result.new(true, :permitted, nil, "custom_data")
+
+        assert result.data == "custom_data"
+      end
+    end
+
     context "#permitted?" do
       test "returns true when permitted" do
         result = HubbadoPolicy::Result.new(true, :permitted)
