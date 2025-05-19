@@ -8,7 +8,6 @@ puts "TEST_BENCH_DETAIL: #{ENV["TEST_BENCH_DETAIL"].inspect}"
 puts
 
 require_relative "../init.rb"
-require "hubbado-policy/controls"
 
 require "test_bench"; TestBench.activate
 require "debug"

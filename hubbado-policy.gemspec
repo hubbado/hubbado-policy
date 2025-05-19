@@ -22,10 +22,6 @@ Gem::Specification.new do |s|
   s.add_dependency "evt-record_invocation"
   s.add_dependency "evt-template_method"
 
-  # TODO: check if they are used
-  s.add_dependency "evt-clock"
-  s.add_dependency "evt-identifier-uuid"
-
   s.add_development_dependency "debug"
   s.add_development_dependency "hubbado-style"
   s.add_development_dependency "test_bench"
