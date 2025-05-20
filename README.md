@@ -241,6 +241,100 @@ class ComplexPolicy < Hubbado::Policy::Base
 end
 ```
 
+## Dependency Configuration
+
+Policy and Scope objects support the `configure` instance method that can be defined in a subclass. This method is called when the object is initialized and is intended to be used for configuring dependencies.
+
+### Basic Configuration
+
+```ruby
+class ComplexPolicy < HubbadoPolicy::Policy
+  attr_reader :permission_service
+
+  def configure
+    @permission_service = PermissionService.new
+  end
+
+  define_policy :complex_rule do
+    if permission_service.check_permission(user, record)
+      permitted
+    else
+      denied(:no_permission)
+    end
+  end
+end
+```
+
+### Integration with Eventide Dependency
+
+Hubbado Policy is designed to work seamlessly with the [eventide-project/dependency](https://github.com/eventide-project/dependency) gem for dependency management. This provides a powerful way to handle service dependencies in your policies and scopes.
+
+```ruby
+# First, set up your dependencies
+require 'dependency'; Dependency.activate
+require 'hubbado-policy'
+
+class Services
+  dependency :permission_service, PermissionService
+  dependency :audit_logger, AuditLogger
+end
+
+# Then use them in your policy
+class ArticlePolicy < HubbadoPolicy::Policy
+  dependency :permission_service, PermissionService
+  dependency :audit_logger, AuditLogger
+  
+  def configure
+    Services.configure(self)
+  end
+
+  define_policy :publish do
+    # Log the attempt
+    audit_logger.log_action("publish_attempt", user: user, record: record)
+    
+    # Check permissions
+    if permission_service.can_publish?(user, record)
+      permitted
+    else
+      denied(:cannot_publish)
+    end
+  end
+end
+```
+
+### Benefits of Using Dependency
+
+Using the `dependency` gem with Hubbado Policy offers several advantages:
+
+1. **Clear dependency declaration** - Dependencies are explicitly declared at the class level
+2. **Consistent initialization** - The `configure` method provides a standard place for setting up dependencies
+3. **Testability** - Dependencies can be easily substituted in tests
+4. **Service reuse** - Common services can be configured once and reused across policies and scopes
+
+### Using Dependency with Scopes
+
+The same pattern works for Scope objects:
+
+```ruby
+class ArticleScope < HubbadoPolicy::Scope
+  include Dependency
+  
+  dependency :visibility_service, VisibilityService
+  
+  def configure
+    Services.configure(self)
+  end
+  
+  def self.default_scope
+    Article.all
+  end
+  
+  def resolve(record, scope, **options)
+    visibility_service.filter_visible_for(record, scope, **options)
+  end
+end
+```
+
 ## Rails Integration
 
 Hubbado Policy includes built-in Rails integration through a Railtie that automatically loads the necessary components and configurations.
