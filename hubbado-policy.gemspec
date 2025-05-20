@@ -1,26 +1,33 @@
-# -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name = "hubbado-policy"
-  s.version = "0.0.0"
-  s.summary = " "
-  s.description = " "
+  s.version = "1.0.0"
+  s.summary = "A lightweight, flexible policy framework for Ruby applications"
 
-  s.authors = ["devs@hubbado.com"]
+  s.authors = ["Hubbado Devs"]
+  s.email = ["devs@hubbado.com"]
   s.homepage = 'https://github.com/hubbado/hubbado-policy'
+  s.license  = "MIT"
 
-  s.metadata["allowed_push_host"] = "https://rubygems.pkg.github.com/hubbado"
-  s.metadata["github_repo"] = s.homepage
   s.metadata["homepage_uri"] = s.homepage
+  s.metadata["source_code_uri"] = s.homepage
+  s.metadata["changelog_uri"] = "#{s.homepage}/blob/master/CHANGELOG.md"
 
   s.require_paths = ["lib"]
-  s.files = Dir.glob("{config,lib}/**/*")
+  s.files = Dir.glob(%w[
+    lib/**/*.rb
+    config/**/*.yml
+    *.gemspec
+    LICENSE*
+    README*
+    CHANGELOG*
+  ])
   s.platform = Gem::Platform::RUBY
   s.required_ruby_version = ">= 3.3"
 
-  s.add_dependency "i18n"
-  s.add_dependency "evt-casing"
-  s.add_dependency "evt-record_invocation"
-  s.add_dependency "evt-template_method"
+  s.add_runtime_dependency "i18n"
+  s.add_runtime_dependency "evt-casing"
+  s.add_runtime_dependency "evt-record_invocation"
+  s.add_runtime_dependency "evt-template_method"
 
   s.add_development_dependency "debug"
   s.add_development_dependency "hubbado-style"
