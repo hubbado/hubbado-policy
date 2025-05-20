@@ -7,7 +7,7 @@ module Hubbado
             send(:attr_writer, policy)
 
             define_method policy do
-              instance_variable_get("@#{policy}") || Policy::Base.denied
+              instance_variable_get("@#{policy}") || ::Hubbado::Policy::Base.denied
             end
 
             define_method "#{policy}?" do
