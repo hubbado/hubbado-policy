@@ -219,27 +219,29 @@ scope.call(user)
 assert scope.scoped?(user)
 ```
 
-## Configuration
+### Using with Eventide Dependency
 
-If your policy or scope objects require additional dependencies, use the `configure` method:
+Hubbado Policy is designed to work seamlessly with the [eventide-project/dependency](https://github.com/eventide-project/dependency) gem. Creating substitutes for testing is as simple as:
 
 ```ruby
-class ComplexPolicy < Hubbado::Policy::Base
-  attr_reader :permission_service
-  
-  def configure
-    @permission_service = PermissionService.new
-  end
-  
-  define_policy :complex_rule do
-    if permission_service.check_permission(user, record)
-      permitted
-    else
-      denied(:no_permission)
-    end
-  end
-end
+# Create a substitute instance of ArticleScope
+article_scope = Dependency::Substitute.build(ArticleScope)
+
+# Configure the result
+article_scope.result = [article1, article2]
+
+# Use in tests
+service = SomeService.new
+service.article_scope = article_scope
+
+# Run the service
+result = service.list_articles(user)
+
+# Verify the scope was called with expected arguments
+assert article_scope.scoped?(user)
 ```
+
+This approach makes testing with substitutes straightforward while maintaining all the benefits of dependency injection.
 
 ## Dependency Configuration
 
