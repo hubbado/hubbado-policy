@@ -37,7 +37,7 @@ Policy objects encapsulate authorization logic and determine whether certain act
 ### Basic Usage
 
 ```ruby
-class ArticlePolicy < HubbadoPolicy::Policy
+class ArticlePolicy < Hubbado::Policy::Base
   define_policy :view do
     return permitted if user.admin?
     
@@ -153,7 +153,7 @@ Scope objects filter collections based on what a user is authorized to access.
 ### Basic Usage
 
 ```ruby
-class ArticleScope < HubbadoPolicy::Scope
+class ArticleScope < Hubbado::Policy::Scope
   def self.default_scope
     Article.all
   end
@@ -195,7 +195,7 @@ Scope objects include a Substitute module for testing:
 ```ruby
 # In your tests
 scope = ArticleScope.new
-scope.extend(HubbadoPolicy::Scope::Substitute)
+scope.extend(Hubbado::Policy::Scope::Substitute)
 scope.result = [article1, article2]
 
 # Now you can assert the scope was called with expected arguments
@@ -208,7 +208,7 @@ assert scope.called?(user)
 If your policy or scope objects require additional dependencies, use the `configure` method:
 
 ```ruby
-class ComplexPolicy < HubbadoPolicy::Policy
+class ComplexPolicy < Hubbado::Policy::Base
   attr_reader :permission_service
   
   def configure
@@ -234,10 +234,12 @@ Hubbado Policy includes built-in Rails integration through a Railtie that automa
 When used with Rails, the gem automatically loads its default locale file:
 
 ```ruby
-# lib/hubbado-policy/railtie.rb
-module HubbadoPolicy
-  class Railtie < ::Rails::Railtie
-    I18n.load_path << File.expand_path("../../../config/locales/en.yml", __FILE__)
+# lib/hubbado/policy/railtie.rb
+module Hubbado
+  module Policy
+    class Railtie < ::Rails::Railtie
+      I18n.load_path << File.expand_path("../../../config/locales/en.yml", __FILE__)
+    end
   end
 end
 ```
@@ -246,7 +248,7 @@ The Railtie is loaded automatically when Rails is detected:
 
 ```ruby
 # lib/hubbado-policy.rb
-require "hubbado-policy/railtie" if defined?(Rails::Railtie)
+require "hubbado/policy/railtie" if defined?(Rails::Railtie)
 ```
 
 ### Recommended Rails Setup
@@ -271,7 +273,7 @@ You may want to create a base `ApplicationPolicy` that all your policies inherit
 
 ```ruby
 # app/policies/application_policy.rb
-class ApplicationPolicy < HubbadoPolicy::Policy
+class ApplicationPolicy < Hubbado::Policy::Base
   # Common methods for all policies
 end
 ```
