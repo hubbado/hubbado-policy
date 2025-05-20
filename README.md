@@ -131,6 +131,34 @@ en:
       denied: "Access denied"
 ```
 
+### Testing
+
+Policies can be mimiced using a built-in control
+
+```ruby
+module Control
+  module Policies
+    module ArticlePolicy
+      def self.example(attributes = nil)
+        attributes ||= {}
+        Policy.new(**attributes)
+      end
+
+      class Policy < ::Hubbado::Policy::Controls::Policy
+        mimic ::ArticlePolicy
+      end
+    end
+  end
+end
+
+mimic_policy = Control::Policies::ArticlePolicy.example
+mimic_policy.view? # returns the value from the real policy
+
+
+mimic_policy = Control::Policies::ArticlePolicy.example(view: ArticlePolicy.denied)
+mimic_policy.view? # returns false
+```
+
 ## Result Objects
 
 Result objects represent the outcome of a policy check, containing:
