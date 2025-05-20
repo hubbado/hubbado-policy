@@ -85,6 +85,22 @@ The `define_policy` method creates three methods for each policy rule:
 2. A predicate method (e.g., `edit?`) that returns a boolean
 3. An underlying implementation method
 
+**Important**: The policy methods support using `return` statements within the block. If a policy method returns `nil` or doesn't explicitly return a `permitted` or `denied` result, it will automatically default to a generic `denied` result. This simplifies policy implementations by not requiring explicit denials for all paths.
+
+```ruby
+define_policy :publish do
+  # Early returns work fine
+  return permitted if user.admin?
+  return denied(:not_verified) unless user.verified?
+
+  # If this evaluates to nil, it automatically becomes a generic denial
+  permitted if record.draft? && record.author == user
+
+  # Reaching the end of the method without returning a result
+  # will also produce a generic denial
+end
+```
+
 ### Policy Results
 
 Every policy check returns a `Result` object, which can be either permitted or denied with a specific reason.
