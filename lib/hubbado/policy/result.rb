@@ -28,8 +28,8 @@ module Hubbado
 
       def message
         return if permitted?
-        return I18n.t('hubbado_policy.errors.denied') if generic_deny?
-        I18n.t(@reason, scope: @i18n_scope)
+        return ::I18n.t('hubbado_policy.errors.denied') if generic_deny?
+        ::I18n.t(@reason, scope: @i18n_scope)
       end
 
       def ==(other)
