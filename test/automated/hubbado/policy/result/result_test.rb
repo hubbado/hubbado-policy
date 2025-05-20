@@ -88,7 +88,7 @@ context "Hubbado" do
         end
 
         test "custom denied message with i18n scope" do
-          result = Hubbado::Policy::Result.new(false, :blank, i18n_scope: "hubbado_policy.custom_error")
+          result = Hubbado::Policy::Result.new(false, :blank, i18n_scope: "errors.custom_error")
 
           assert result.message == "custom blank error"
         end

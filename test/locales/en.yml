@@ -1,0 +1,6 @@
+en:
+  hubbado_policy:
+    blank: blank error
+  errors:
+    custom_error:
+      blank: custom blank error

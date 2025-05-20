@@ -12,4 +12,6 @@ require_relative "../init.rb"
 require "test_bench"; TestBench.activate
 require "debug"
 
+I18n.load_path += Dir[File.expand_path("test/locales") + "/*.yml"]
+
 include Hubbado::Policy
