@@ -276,18 +276,14 @@ Hubbado Policy is designed to work seamlessly with the [eventide-project/depende
 require 'dependency'; Dependency.activate
 require 'hubbado-policy'
 
-class Services
-  dependency :permission_service, PermissionService
-  dependency :audit_logger, AuditLogger
-end
-
 # Then use them in your policy
 class ArticlePolicy < HubbadoPolicy::Policy
   dependency :permission_service, PermissionService
   dependency :audit_logger, AuditLogger
 
   def configure
-    Services.configure(self)
+    PermissionService.configure(self)
+    AuditLogger.configure(self)
   end
 
   define_policy :publish do
@@ -324,7 +320,7 @@ class ArticleScope < HubbadoPolicy::Scope
   dependency :visibility_service, VisibilityService
 
   def configure
-    Services.configure(self)
+    VisibilityService.configure(self)
   end
 
   def self.default_scope
