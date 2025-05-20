@@ -200,7 +200,7 @@ scope.result = [article1, article2]
 
 # Now you can assert the scope was called with expected arguments
 scope.call(user)
-assert scope.called?(user)
+assert scope.scoped?(user)
 ```
 
 ## Configuration
