@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
     CHANGELOG*
   ])
   s.platform = Gem::Platform::RUBY
-  s.required_ruby_version = ">= 3.3"
+  s.required_ruby_version = ">= 3.2"
 
   s.add_runtime_dependency "i18n"
   s.add_runtime_dependency "evt-casing"
