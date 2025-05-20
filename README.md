@@ -85,7 +85,7 @@ The `define_policy` method creates three methods for each policy rule:
 2. A predicate method (e.g., `edit?`) that returns a boolean
 3. An underlying implementation method
 
-**Important**: The policy methods support using `return` statements within the block. If a policy method returns `nil` or doesn't explicitly return a `permitted` or `denied` result, it will automatically default to a generic `denied` result. This simplifies policy implementations by not requiring explicit denials for all paths.
+The policy methods support using `return` statements within the block. If a policy method returns `nil` or doesn't explicitly return a `permitted` or `denied` result, it will automatically default to a generic `denied` result. This simplifies policy implementations by not requiring explicit denials for all paths.
 
 ```ruby
 define_policy :publish do
@@ -283,7 +283,7 @@ end
 class ArticlePolicy < HubbadoPolicy::Policy
   dependency :permission_service, PermissionService
   dependency :audit_logger, AuditLogger
-  
+
   def configure
     Services.configure(self)
   end
@@ -291,7 +291,7 @@ class ArticlePolicy < HubbadoPolicy::Policy
   define_policy :publish do
     # Log the attempt
     audit_logger.log_action("publish_attempt", user: user, record: record)
-    
+
     # Check permissions
     if permission_service.can_publish?(user, record)
       permitted
@@ -318,17 +318,17 @@ The same pattern works for Scope objects:
 ```ruby
 class ArticleScope < HubbadoPolicy::Scope
   include Dependency
-  
+
   dependency :visibility_service, VisibilityService
-  
+
   def configure
     Services.configure(self)
   end
-  
+
   def self.default_scope
     Article.all
   end
-  
+
   def resolve(record, scope, **options)
     visibility_service.filter_visible_for(record, scope, **options)
   end
