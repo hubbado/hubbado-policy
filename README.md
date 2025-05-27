@@ -152,11 +152,24 @@ module Control
 end
 
 mimic_policy = Control::Policies::ArticlePolicy.example
-mimic_policy.view? # returns the value from the real policy
+mimic_policy.view? # returns false (denied by default)
 
-
+# Override specific policies
 mimic_policy = Control::Policies::ArticlePolicy.example(view: ArticlePolicy.denied)
 mimic_policy.view? # returns false
+
+# Control policy behavior with permit/deny methods
+mimic_policy = Control::Policies::ArticlePolicy.example
+mimic_policy.permit(:view)
+mimic_policy.view? # returns true
+
+mimic_policy.deny(:view)
+mimic_policy.view? # returns false
+
+# Deny with reason and data
+mimic_policy.deny(:view, :not_authorized)
+mimic_policy.deny(:view, data: { reason: "custom data" })
+mimic_policy.deny(:view, :not_authorized, data: { user_id: 123 })
 ```
 
 ## Result Objects
@@ -190,18 +203,55 @@ end
 - `message` - Returns the localized error message
 - `data` - Returns any additional context data
 
+### Error Handling
+
+Policies validate their inputs and will raise errors for invalid usage:
+
+```ruby
+# Will raise "User not provided" error
+ArticlePolicy.build(nil, article)
+
+# Control policies raise UnkownPolicy for invalid policy names
+mimic_policy = Control::Policies::ArticlePolicy.example
+mimic_policy.permit(:invalid_policy)  # raises UnkownPolicy
+```
+
+### Accessing Result Data
+
+When policies return additional context data, you can access it through the result:
+
+```ruby
+# In your policy
+define_policy :edit do
+  return denied(:quota_exceeded, data: { limit: 10, current: 12 }) if over_quota?
+  permitted
+end
+
+# Using the result
+result = policy.edit
+if result.denied?
+  puts result.message  # "You have exceeded your quota"
+  puts result.data[:limit]    # 10
+  puts result.data[:current]  # 12
+end
+```
+
 ## Scope Objects
 
 Scope objects filter collections based on what a user is authorized to access.
 
 ### Basic Usage
 
+Scope objects require two template methods to be implemented in subclasses:
+
 ```ruby
 class ArticleScope < Hubbado::Policy::Scope
+  # Required: Define the base collection to filter
   def self.default_scope
     Article.all
   end
   
+  # Required: Implement the filtering logic
   def resolve(record, scope, **options)
     return scope if record.admin?
     
@@ -212,6 +262,14 @@ end
 # Usage
 visible_articles = ArticleScope.call(current_user)
 ```
+
+**Required Methods:**
+- `default_scope` - Class method that returns the base collection to filter
+- `resolve(record, scope, **options)` - Instance method that applies filtering logic
+
+Both methods must be implemented or a `MethodMissing` error will be raised.
+
+**Important:** Like policies, use `Scope.call()` instead of manual instantiation to ensure the `configure` method is called if defined.
 
 ### Custom Scopes
 
