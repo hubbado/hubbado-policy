@@ -7,8 +7,14 @@ module Hubbado
         end
 
         module ClassMethods
+          def inherited(subclass)
+            super
+            # Copy policies from parent class to subclass
+            subclass.instance_variable_set(:@policies, @policies&.dup || Set.new)
+          end
+
           def define_policy(policy, *args, **kwargs, &block)
-            @policies ||= []
+            @policies ||= Set.new
             @policies << policy
 
             # NOTE: This uses the technique described here so that the block given to
