@@ -1,11 +1,11 @@
 Gem::Specification.new do |s|
   s.name = "hubbado-policy"
-  s.version = "1.2.0"
+  s.version = "1.2.1"
   s.summary = "A lightweight, flexible policy framework for Ruby applications"
 
   s.authors = ["Hubbado Devs"]
   s.email = ["devs@hubbado.com"]
-  s.homepage = 'https://github.com/hubbado/hubbado-policy'
+  s.homepage = "https://github.com/hubbado/hubbado-policy"
   s.license  = "MIT"
 
   s.metadata["homepage_uri"] = s.homepage
@@ -24,10 +24,10 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.required_ruby_version = ">= 3.2"
 
-  s.add_runtime_dependency "i18n"
   s.add_runtime_dependency "evt-casing"
   s.add_runtime_dependency "evt-record_invocation"
   s.add_runtime_dependency "evt-template_method"
+  s.add_runtime_dependency "i18n"
 
   s.add_development_dependency "debug"
   s.add_development_dependency "hubbado-style"
