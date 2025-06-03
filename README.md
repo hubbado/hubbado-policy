@@ -131,6 +131,27 @@ en:
       denied: "Access denied"
 ```
 
+You can also specify a custom i18n scope when returning denied results:
+
+```ruby
+define_policy :edit do
+  # Use a different i18n scope for this specific denial
+  return denied(:not_authorized, i18n_scope: "custom_errors.article")
+  
+  permitted
+end
+```
+
+Both the class method and instance method versions of `denied` support the `i18n_scope` parameter:
+
+```ruby
+# Class method
+ArticlePolicy.denied(:custom_reason, i18n_scope: "errors.custom")
+
+# Instance method  
+policy.denied(:custom_reason, i18n_scope: "errors.custom")
+```
+
 ### Testing
 
 Policies can be mimiced using a built-in control
