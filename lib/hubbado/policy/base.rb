@@ -48,13 +48,14 @@ module Hubbado
       # Define this in a subclass if there are dependencies to be configure
       template_method :configure
 
-      def self.denied(reason = nil, data: nil)
+      def self.denied(reason = nil, data: nil, i18n_scope: nil)
+        i18n_scope ||= self.i18n_scope
         reason ||= :denied
         Result.new(false, reason, i18n_scope: i18n_scope, data: data)
       end
 
       def self.permitted
-        Result.new(true, :permitted, i18n_scope: i18n_scope)
+        Result.new(true, :permitted)
       end
 
       def self.i18n_scope
@@ -72,8 +73,8 @@ module Hubbado
         self.class == other.class && user == other.user && record == other.record
       end
 
-      def denied(reason = nil, data: nil)
-        self.class.denied(reason, data: data)
+      def denied(reason = nil, data: nil, i18n_scope: nil)
+        self.class.denied(reason, data: data, i18n_scope: i18n_scope)
       end
 
       def permitted
