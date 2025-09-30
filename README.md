@@ -40,17 +40,17 @@ Policy objects encapsulate authorization logic and determine whether certain act
 class ArticlePolicy < Hubbado::Policy::Base
   define_policy :view do
     return permitted if user.admin?
-    
+
     if record.published?
-      permitted 
+      permitted
     else
       denied(:not_published)
     end
   end
-  
+
   define_policy :edit do
     return permitted if user.admin?
-    
+
     if record.author == user
       permitted
     else
@@ -137,7 +137,7 @@ You can also specify a custom i18n scope when returning denied results:
 define_policy :edit do
   # Use a different i18n scope for this specific denial
   return denied(:not_authorized, i18n_scope: "custom_errors.article")
-  
+
   permitted
 end
 ```
@@ -148,7 +148,7 @@ Both the class method and instance method versions of `denied` support the `i18n
 # Class method
 ArticlePolicy.denied(:custom_reason, i18n_scope: "errors.custom")
 
-# Instance method  
+# Instance method
 policy.denied(:custom_reason, i18n_scope: "errors.custom")
 ```
 
@@ -191,6 +191,13 @@ mimic_policy.view? # returns false
 mimic_policy.deny(:view, :not_authorized)
 mimic_policy.deny(:view, data: { reason: "custom data" })
 mimic_policy.deny(:view, :not_authorized, data: { user_id: 123 })
+```
+
+In addition, there are two RSpec matcher `permit` and `deny` and
+have to be required manually:
+```ruby
+require 'hubbado/policy/rspec_matchers/permit'
+require 'hubbado/policy/rspec_matchers/deny'
 ```
 
 ## Result Objects
@@ -271,11 +278,11 @@ class ArticleScope < Hubbado::Policy::Scope
   def self.default_scope
     Article.all
   end
-  
+
   # Required: Implement the filtering logic
   def resolve(record, scope, **options)
     return scope if record.admin?
-    
+
     scope.where(published: true).or(scope.where(author_id: record.id))
   end
 end
@@ -299,7 +306,7 @@ You can pass custom base scopes:
 ```ruby
 # Scope only to a specific category
 category_articles = ArticleScope.call(
-  current_user, 
+  current_user,
   Article.where(category_id: params[:category_id])
 )
 
