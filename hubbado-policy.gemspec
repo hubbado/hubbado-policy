@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "hubbado-policy"
-  s.version = "1.3.0"
+  s.version = "1.4.0"
   s.summary = "A lightweight, flexible policy framework for Ruby applications"
 
   s.authors = ["Hubbado Devs"]
